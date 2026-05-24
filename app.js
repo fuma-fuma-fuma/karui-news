@@ -38,6 +38,26 @@ function renderNews() {
         ${escapeHtml(item.publishedAt || "")}
       </div>
 
+      <div class="url-block">
+        <div class="url-label">
+          News URL
+        </div>
+
+        <div class="url-text">
+          ${escapeHtml(item.url || "")}
+        </div>
+      </div>
+
+      <div class="url-block">
+        <div class="url-label">
+          Image URL
+        </div>
+
+        <div class="url-text">
+          ${escapeHtml(item.image || "")}
+        </div>
+      </div>
+
       <div class="actions">
         <button class="read-btn">
           本文を表示
@@ -70,7 +90,7 @@ function renderNews() {
 }
 
 function escapeHtml(str) {
-  return str
+  return String(str)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
