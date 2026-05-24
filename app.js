@@ -74,7 +74,10 @@ function renderNews() {
 
     btn.addEventListener("click", () => {
       if (!loaded) {
-        contentDiv.textContent = item.content || "本文なし";
+        // contentDiv.textContent = item.content || "本文なし";
+        contentDiv.textContent = formatContent(
+            item.content || "本文なし"
+        );
         loaded = true;
       }
 
@@ -87,6 +90,12 @@ function renderNews() {
 
     container.appendChild(article);
   }
+}
+
+function formatContent(text) {
+  return String(text)
+    .replace(/\t/g, "　")
+    .replace(/\r/g, "");
 }
 
 function escapeHtml(str) {
