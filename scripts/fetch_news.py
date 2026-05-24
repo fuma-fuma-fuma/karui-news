@@ -1,10 +1,10 @@
 import os
 import requests
 import json
+import time
 from datetime import datetime
 
 API_KEY = os.environ["GNEWS_API_KEY"]
-
 BASE_URL = "https://gnews.io/api/v4/top-headlines"
 
 
@@ -20,8 +20,13 @@ def fetch_news(category=None):
         params["category"] = category
 
     r = requests.get(BASE_URL, params=params)
-    r.raise_for_status()
 
+    if r.status_code == 429:
+        print("Rate limited. Waiting 15 seconds...")
+        time.sleep(15)
+        r = requests.get(BASE_URL, params=params)
+
+    r.raise_for_status()
     return r.json()["articles"]
 
 
@@ -36,7 +41,12 @@ def simplify(articles):
     ]
 
 
+print("Fetching general news...")
 general = simplify(fetch_news())
+
+time.sleep(15)
+
+print("Fetching business news...")
 business = simplify(fetch_news("business"))
 
 output = {
