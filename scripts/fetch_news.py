@@ -30,11 +30,25 @@ def fetch_news(category=None):
     return r.json()["articles"]
 
 
+# def simplify(articles):
+#     return [
+#         {
+#             "title": a["title"],
+#             "url": a["url"],
+#             "source": a["source"]["name"]
+#         }
+#         for a in articles
+#     ]
+
 def simplify(articles):
     return [
         {
             "title": a["title"],
+            "description": a.get("description"),
+            "content": a.get("content"),
             "url": a["url"],
+            "image": a.get("image"),
+            "publishedAt": a.get("publishedAt"),
             "source": a["source"]["name"]
         }
         for a in articles
